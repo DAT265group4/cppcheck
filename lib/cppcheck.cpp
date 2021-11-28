@@ -506,7 +506,7 @@ unsigned int CppCheck::check(const std::string &path)
             if (fdump.is_open()) {
                 fdump << "<dump cfg=\"\">" << std::endl;
                 for (const ErrorMessage& errmsg: compilerWarnings)
-                    fdump << "  <clang-warning file=\"" << toxml(errmsg.callStack.front().getfile()) << "\" line=\"" << errmsg.callStack.front().line << "\" " << toxml(errmsg.shortMessage()) << "\"/>\n";
+                    fdump << "  <clang-warning file=\"" << toxml(errmsg.callStack.front().getfile()) << "\" line=\"" << errmsg.callStack.front().line << "\" column=\"" << errmsg.callStack.front().column << "\" message=\"" << toxml(errmsg.shortMessage()) << "\"/>\n";
                 fdump << "  <standards>" << std::endl;
                 fdump << "    <c version=\"" << mSettings.standards.getC() << "\"/>" << std::endl;
                 fdump << "    <cpp version=\"" << mSettings.standards.getCPP() << "\"/>" << std::endl;
