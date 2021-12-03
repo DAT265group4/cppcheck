@@ -33,7 +33,6 @@ private:
 
     void run() OVERRIDE {
         settings.severity.enable(Severity::style);
-
         TEST_CASE(callback1);
         TEST_CASE(callback2);
 
