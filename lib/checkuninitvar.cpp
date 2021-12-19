@@ -1520,7 +1520,7 @@ void CheckUninitVar::uninitStructMemberError(const Token *tok, const std::string
     reportError(tok,
                 Severity::error,
                 "uninitStructMember",
-                "$symbol:" + membername + "\nUninitialized struct member: $symbol", CWE_USE_OF_UNINITIALIZED_VARIABLE, Certainty::normal);
+                "$symbol:" + membername + "\nUninitialized struct Mih member: $symbol", CWE_USE_OF_UNINITIALIZED_VARIABLE, Certainty::normal);
 }
 
 enum class FunctionUsage { None, PassedByReference, Used };

@@ -35,7 +35,6 @@ private:
         settings.severity.enable(Severity::style);
         TEST_CASE(callback1);
         TEST_CASE(callback2);
-
     }
 
 #define check(...) check_(__FILE__, __LINE__, __VA_ARGS__)
@@ -90,4 +89,4 @@ private:
     }
 };
 
-REGISTER_TEST(TestUnusedFunctions)
+REGISTER_TEST(TestCommentedMethods)

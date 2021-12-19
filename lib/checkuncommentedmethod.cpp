@@ -23,13 +23,6 @@
 
 #include "astutils.h"
 #include "errorlogger.h"
-#include "library.h"
-#include "settings.h"
-#include "symboldatabase.h"
-#include "token.h"
-#include "tokenize.h"
-#include "tokenlist.h"
-
 #include <tinyxml2.h>
 #include <algorithm>
 #include <cstdlib>
@@ -41,8 +34,7 @@
 
 // Register this check class
 CheckUncommentedMethod CheckUncommentedMethod::instance;
-
-static const struct CWE CWE561(561U);   // Dead Code
+static const struct CWE CWE785(785U);   // Undocumented Code
 
 //---------------------------------------------------------------------------
 // FUNCTION COMMENTS - Check for undocumented/uncommented functions
@@ -79,11 +71,6 @@ void CheckUncommentedMethod::parseTokens(const Tokenizer &tokenizer, const char 
         if (comments.filename.empty()) {
             comments.filename = tokenizer.list.getSourceFilePath();
         }
-//             Multiple files => filename = "+"
-//        else if (comments.filename != tokenizer.list.getSourceFilePath()) {
-//            func.filename = "+";
-//            comments.usedOtherFile |= comments.usedSameFile;
-//        }
     }
     // Function comments..
     const Token *lambdaEndToken = nullptr;
@@ -128,7 +115,7 @@ void CheckUncommentedMethod::parseTokens(const Tokenizer &tokenizer, const char 
         if (!doMarkup // only check source files
             && settings->library.isexporter(tok->str()) && tok->next() != nullptr) {
             const Token * propToken = tok->next();
-            while (propToken && propToken->str() != ")") {
+            while (propToken && propToken->str() == "/*") {
                 if (settings->library.isexportedprefix(tok->str(), propToken->str())) {
                     const Token* nextPropToken = propToken->next();
                     const std::string& value = nextPropToken->str();
@@ -140,7 +127,7 @@ void CheckUncommentedMethod::parseTokens(const Tokenizer &tokenizer, const char 
                 if (settings->library.isexportedsuffix(tok->str(), propToken->str())) {
                     const Token* prevPropToken = propToken->previous();
                     const std::string& value = prevPropToken->str();
-                    if (value != ")" && mFunctions.find(value) != mFunctions.end()) {
+                    if (value == "*/" && mFunctions.find(value) != mFunctions.end()) {
                         mFunctions[value].hascomments = true;
                     }
                     mFunctionCalls.insert(value);
@@ -153,7 +140,7 @@ void CheckUncommentedMethod::parseTokens(const Tokenizer &tokenizer, const char 
             const Token * propToken = tok->next();
             if (propToken->next()) {
                 propToken = propToken->next();
-                while (propToken && propToken->str() != "\\") {
+                while (propToken && propToken->str() == "//") {
                     const std::string& value = propToken->str();
                     if (!value.empty()) {
                         mFunctions[value].hascomments = true;
@@ -325,7 +312,10 @@ void CheckUncommentedMethod::uncommentedFunctionError(ErrorLogger * const errorL
         locationList.push_back(fileLoc);
     }
 
-    const ErrorMessage errmsg(locationList, emptyString, Severity::style, "$symbol:" + funcname + "\nThe function '$symbol' does not have comments.", "unusedFunction", CWE561, Certainty::normal);
+    const ErrorMessage errmsg(locationList, emptyString, Severity::style,
+                              "$symbol:" + funcname + "\nThe function '$symbol' does not have comments.",
+                              "unusedFunction", CWE785,
+                              Certainty::normal);
     if (errorLogger)
         errorLogger->reportErr(errmsg);
     else

@@ -227,6 +227,8 @@ public:
 
     void checkModuloOfOne();
 
+    void checkUncommentedMethod();
+
     void checkOverlappingWrite();
     void overlappingWriteUnion(const Token *tok);
     void overlappingWriteFunction(const Token *tok);
@@ -288,6 +290,7 @@ private:
     void knownArgumentError(const Token *tok, const Token *ftok, const ValueFlow::Value *value, const std::string &varexpr, bool isVariableExpressionHidden);
     void comparePointersError(const Token *tok, const ValueFlow::Value *v1, const ValueFlow::Value *v2);
     void checkModuloOfOneError(const Token *tok);
+    void checkUncommentedMethodError(const Token *tok);
 
     void getErrorMessages(ErrorLogger *errorLogger, const Settings *settings) const OVERRIDE {
         CheckOther c(nullptr, settings, errorLogger);
@@ -364,6 +367,7 @@ private:
         const std::vector<const Token *> nullvec;
         c.funcArgOrderDifferent("function", nullptr, nullptr, nullvec, nullvec);
         c.checkModuloOfOneError(nullptr);
+        c.checkUncommentedMethod(nullptr);
     }
 
     static std::string myName() {
@@ -429,6 +433,8 @@ private:
                "- calculating modulo of one.\n"
                "- known function argument, suspicious calculation.\n";
     }
+
+    void checkUncommentedMethod(const Token *tok);
 };
 /// @}
 //---------------------------------------------------------------------------

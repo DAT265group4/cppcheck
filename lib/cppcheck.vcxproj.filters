@@ -208,6 +208,9 @@
     <ClInclude Include="checknullpointer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="checkuncommentedmethod.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
     <ClInclude Include="checkother.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -47,7 +47,6 @@ public:
             return;
 
         CheckInternal checkInternal(tokenizer, settings, errorLogger);
-
         checkInternal.checkTokenMatchPatterns();
         checkInternal.checkTokenSimpleMatchPatterns();
         checkInternal.checkMissingPercentCharacter();
@@ -81,6 +80,9 @@ public:
 
     /** @brief Try to avoid some new functions that are not fully supported in Linux */
     void checkStlUsage();
+
+    /** @brief %Check uncommented methods const Token *tok, const std::string &pattern, const std::string &funcname) */
+    void checkRedundantTokCheck();
 private:
     void multiComparePatternError(const Token *tok, const std::string &pattern, const std::string &funcname);
     void simplePatternError(const Token *tok, const std::string &pattern, const std::string &funcname);
@@ -91,6 +93,7 @@ private:
     void orInComplexPattern(const Token *tok, const std::string &pattern, const std::string &funcname);
     void extraWhitespaceError(const Token *tok, const std::string &pattern, const std::string &funcname);
     void checkRedundantTokCheckError(const Token *tok);
+    void checkUncommentedMethods(const Token *tok, const std::string &pattern, const std::string &funcname);
 
     void getErrorMessages(ErrorLogger *errorLogger, const Settings *settings) const OVERRIDE {
         CheckInternal c(nullptr, settings, errorLogger);
@@ -102,7 +105,7 @@ private:
         c.redundantNextPreviousError(nullptr, "previous", "next");
         c.orInComplexPattern(nullptr, "||", "Match");
         c.extraWhitespaceError(nullptr, "%str% ", "Match");
-        c.checkRedundantTokCheckError(nullptr);
+        c.checkRedundantTokCheckError(nullptr, "//", "Match");
     }
 
     static std::string myName() {

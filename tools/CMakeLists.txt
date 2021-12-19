@@ -6,7 +6,7 @@ foreach(file ${srcs_lib})
     else()
         set(src "${CMAKE_SOURCE_DIR}/lib/${file}")
     endif()
-    set(srcs_tools ${srcs_tools} ${src})
+    set(srcs_tools ${srcs_tools} ${src} ../demo/File1.cpp)
 endforeach()
 
 add_executable(dmake EXCLUDE_FROM_ALL

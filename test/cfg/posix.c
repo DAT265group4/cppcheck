@@ -131,6 +131,7 @@ void memleak_scandir(void)
     // TODO: cppcheck-suppress memleak
 }
 
+// this is imprortant
 void no_memleak_scandir(void)
 {
     struct dirent **namelist;
