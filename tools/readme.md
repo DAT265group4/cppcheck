@@ -1,4 +1,4 @@
-## Cppcheck developer and build tools
+cd ..## Cppcheck developer and build tools
 
 ### * tools/matchcompiler.py
 

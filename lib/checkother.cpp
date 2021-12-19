@@ -65,7 +65,7 @@ static const struct CWE CWE704(704U);   // Incorrect Type Conversion or Cast
 static const struct CWE CWE758(758U);   // Reliance on Undefined, Unspecified, or Implementation-Defined Behavior
 static const struct CWE CWE768(768U);   // Incorrect Short Circuit Evaluation
 static const struct CWE CWE783(783U);   // Operator Precedence Logic Error
-
+static const struct CWE CWE785(561U);   // Undocumented Code
 //----------------------------------------------------------------------------------
 // The return value of fgetc(), getc(), ungetc(), getchar() etc. is an integer value.
 // If this return value is stored in a character variable and then compared
@@ -3593,3 +3593,55 @@ void CheckOther::overlappingWriteFunction(const Token *tok)
     const std::string funcname = tok ? tok->str() : "";
     reportError(tok, Severity::error, "overlappingWriteFunction", "Overlapping read/write in " + funcname + "() is undefined behavior");
 }
+
+
+//-----------------------------------------------------------------------------
+// Uncommented method check
+//-----------------------------------------------------------------------------
+void CheckOther::checkUncommentedMethod() {
+
+    // This is experimental for now. See #5076
+    if (!mSettings->certainty.isEnabled(Certainty::normal))
+        return;
+
+    if (!mSettings->severity.isEnabled(Severity::style))
+        return;
+
+    for (const Token *tok = mTokenizer->tokens(); tok; tok = tok->next()) {
+        //comment inside the method
+        if (tok->str() == "void") {
+            tok = tok->next();
+            bool foundComment = false;
+            while (tok && tok->str() != "}") {
+                //  (\/\/)(.+?)(?=[
+                //
+                //]|\*\))
+                if (tok->link() && Token::Match(tok, "//")) {
+                    tok = tok->link();
+                    foundComment = true;
+                }
+
+                if (!tok->isExpandedMacro() && tok->linenr() != tok->next()->linenr()) {
+                    tok = tok->next();
+                }
+                // bailout: break if no comment found
+                if (!tok)
+                    break;
+            }
+            if (foundComment == false)
+                checkUncommentedMethodError(tok);
+        }
+
+    }
+}
+
+//-----------------------------------------------------------------------------
+// Uncommented method check
+//-----------------------------------------------------------------------------
+void CheckOther::checkUncommentedMethodError(const Token *tok) {
+    reportError(
+            tok, Severity::error, "uncommentedmethod", "Method does not contain any comments", CWE785,
+            Certainty::normal);
+}
+
+

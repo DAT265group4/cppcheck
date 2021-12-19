@@ -28,6 +28,7 @@ HEADERS += $${PWD}/analyzerinfo.h \
            $${PWD}/checkstl.h \
            $${PWD}/checkstring.h \
            $${PWD}/checktype.h \
+           $${PWD}/ccheckuncommentedmethod.h \
            $${PWD}/checkuninitvar.h \
            $${PWD}/checkunusedfunctions.h \
            $${PWD}/checkunusedvar.h \
@@ -83,11 +84,12 @@ SOURCES += $${PWD}/analyzerinfo.cpp \
            $${PWD}/checkmemoryleak.cpp \
            $${PWD}/checknullpointer.cpp \
            $${PWD}/checkother.cpp \
-           $${PWD}/checkpostfixoperator.cpp \
+           $${PWD}/checkuncommentedmethod.cpp \
            $${PWD}/checksizeof.cpp \
            $${PWD}/checkstl.cpp \
            $${PWD}/checkstring.cpp \
            $${PWD}/checktype.cpp \
+            $${PWD}/checktype.cpp \
            $${PWD}/checkuninitvar.cpp \
            $${PWD}/checkunusedfunctions.cpp \
            $${PWD}/checkunusedvar.cpp \

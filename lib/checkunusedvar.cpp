@@ -1336,7 +1336,7 @@ void CheckUnusedVar::checkFunctionVariableUsage()
 
 void CheckUnusedVar::unusedVariableError(const Token *tok, const std::string &varname)
 {
-    reportError(tok, Severity::style, "unusedVariable", "$symbol:" + varname + "\nUnused variable: $symbol", CWE563, Certainty::normal);
+    reportError(tok, Severity::style, "unusedVariable", "$symbol:" + varname + "() \nUncommented method: $symbol", CWE563, Certainty::normal);
 }
 
 void CheckUnusedVar::allocatedButUnusedVariableError(const Token *tok, const std::string &varname)

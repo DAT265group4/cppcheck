@@ -184,6 +184,7 @@ LIBOBJ =      $(libcppdir)/analyzerinfo.o \
               $(libcppdir)/checkuninitvar.o \
               $(libcppdir)/checkunusedfunctions.o \
               $(libcppdir)/checkunusedvar.o \
+              $(libcppdir)/checkuncommentedmethod.o \
               $(libcppdir)/checkvaarg.o \
               $(libcppdir)/clangimport.o \
               $(libcppdir)/color.o \
