@@ -72,6 +72,7 @@ public:
         checkOther.checkUnreachableCode();
         checkOther.checkSuspiciousSemicolon();
         checkOther.checkVariableScope();
+        checkOther.checkUncommentedMethod();
         checkOther.checkSignOfUnsignedVariable();  // don't ignore casts (#3574)
         checkOther.checkIncompleteArrayFill();
         checkOther.checkVarFuncNullUB();
@@ -312,6 +313,8 @@ private:
         //performance
         c.redundantCopyError(nullptr,  "varname");
         c.redundantCopyError(nullptr, nullptr, "var");
+        c.checkUncommentedMethod();
+        c.checkUncommentedMethodError(nullptr);
 
         // style/warning
         c.checkComparisonFunctionIsAlwaysTrueOrFalseError(nullptr, "isless","varName",false);
@@ -367,7 +370,6 @@ private:
         const std::vector<const Token *> nullvec;
         c.funcArgOrderDifferent("function", nullptr, nullptr, nullvec, nullvec);
         c.checkModuloOfOneError(nullptr);
-        c.checkUncommentedMethod(nullptr);
     }
 
     static std::string myName() {
@@ -434,7 +436,7 @@ private:
                "- known function argument, suspicious calculation.\n";
     }
 
-    void checkUncommentedMethod(const Token *tok);
+
 };
 /// @}
 //---------------------------------------------------------------------------

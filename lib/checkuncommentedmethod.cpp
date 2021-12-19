@@ -267,7 +267,6 @@ static bool isOperatorFunction(const std::string & funcName)
 }
 
 
-
 bool CheckUncommentedMethod::check(ErrorLogger * const errorLogger, const Settings& settings)
 {
     bool errors = false;

@@ -1481,7 +1481,7 @@ void CheckUninitVar::uninitdataError(const Token *tok, const std::string &varnam
 void CheckUninitVar::uninitvarError(const Token *tok, const std::string &varname, ErrorPath errorPath)
 {
     errorPath.emplace_back(tok, "");
-    reportError(errorPath, Severity::error, "uninitvar", "$symbol:" + varname + "\nUninitialized variable: $symbol", CWE_USE_OF_UNINITIALIZED_VARIABLE, Certainty::normal);
+    reportError(errorPath, Severity::error, "uncommentedMethod", "$symbol:" + varname + "() \nUncommented method: $symbol", CWE_USE_OF_UNINITIALIZED_VARIABLE, Certainty::normal);
 }
 
 void CheckUninitVar::uninitvarError(const Token* tok, const ValueFlow::Value& v)
@@ -1520,7 +1520,7 @@ void CheckUninitVar::uninitStructMemberError(const Token *tok, const std::string
     reportError(tok,
                 Severity::error,
                 "uninitStructMember",
-                "$symbol:" + membername + "\nUninitialized struct Mih member: $symbol", CWE_USE_OF_UNINITIALIZED_VARIABLE, Certainty::normal);
+                "$symbol:" + membername + "\nUninitialized struct member: $symbol", CWE_USE_OF_UNINITIALIZED_VARIABLE, Certainty::normal);
 }
 
 enum class FunctionUsage { None, PassedByReference, Used };
